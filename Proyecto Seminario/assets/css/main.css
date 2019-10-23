@@ -2916,3 +2916,24 @@ input, select, textarea {
 #banner header p{
 	color: #4acaa8;
 }
+
+.head{
+	display: flex;
+	flex-direction: row;
+}
+
+.logo{
+	display: block;
+	margin: auto;
+}
+
+.options{
+	display: block;
+	position: absolute;
+	top: 0;
+	margin-left: 80%;
+}
+
+.options a{
+	margin-left: 10px;
+}
