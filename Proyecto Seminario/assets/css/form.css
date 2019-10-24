@@ -7,7 +7,7 @@ body{
 }
 
 .stepRegister{
-  width: 80vw;
+  width: 50vw;
   min-height: 15vh !important;
   background: #f5f5f5;
   padding: 2em;
@@ -31,9 +31,21 @@ body{
   padding: 2em;
   padding-top: 1em;
   min-height: 70vh;
-  width: 80vw;
+  width: 50vw;
 }
 
+.presentationRow{
+  display: flex;
+  flex-direction: column;
+}
+
+.options a{
+  background-color: #4acaa8;
+}
+
+.segundaPersona, .terceraEmpresa, .cuartaUser{
+  text-align: center;
+}
 
 #check2, label[for="check2"]{
   margin-left: 80px;

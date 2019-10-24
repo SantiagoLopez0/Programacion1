@@ -6,12 +6,63 @@ $(function(){
     format: 'yyyy-mm-dd'
   });
 
+btnActions();
 
-  $('#formulario').submit(function(event){
+  $('#formularioUser').submit(function(event){
     event.preventDefault();
-    checkContrasena();
+    checkContrasena()
   })
+
 })
+
+function btnActions(){
+  $('#formularioPersona').submit(function(event){
+    event.preventDefault();
+    $('.segundaPersona').hide();
+    $('#step1').removeClass('active');
+    $('#step2').addClass('active');
+    $('.terceraEmpresa').show();
+  })
+
+  $('#formularioEmpresa').submit(function(event){
+    event.preventDefault();
+    $('.terceraEmpresa').hide();
+    $('#step2').removeClass('active');
+    $('#step3').addClass('active');
+    $('.cuartaUser').show();
+  })
+
+  $('#btnYes').click(function(event){
+    event.preventDefault();
+    $('#formularioEmpresa').show();
+    $('.presentationRow').hide()
+    $('.options').hide()
+  })
+
+  $('#btnNo').click(function(event){
+    event.preventDefault();
+    $('.terceraEmpresa').hide();
+    $('#step2').removeClass('active');
+    $('#step3').addClass('active');
+    $('.cuartaUser').show();
+  });
+
+  $('.volverEmp').click(function(event){
+    event.preventDefault();
+    $('.terceraEmpresa').hide();
+    $('.segundaPersona').show();
+    $('#step2').removeClass('active');
+    $('#step1').addClass('active');
+  });
+
+  $('#volverUser').click(function(event){
+    event.preventDefault();
+    $('.cuartaUser').hide();
+    $('.terceraEmpresa').show();
+    $('#step3').removeClass('active');
+    $('#step2').addClass('active');
+  });
+}
 
 function checkContrasena(){
   var contrasena = $('#contrasena').val();
@@ -27,21 +78,36 @@ function checkContrasena(){
 
 function getDatos(){
   var form_data = new FormData();
-  form_data.append('nombre', $('#nombre').val());
-  form_data.append('fechaNacimiento', $('#fechaNacimiento').val());
-  form_data.append('sexo', $('input[name="sexo"]').val());
-  form_data.append('automovil', document.getElementById('check1').checked);
-  form_data.append('bus', document.getElementById('check2').checked);
-  form_data.append('email', $('#email').val());
-  form_data.append('fueraCiudad', document.getElementById('fueraCiudad').checked);
-  form_data.append('experiencia', $('#experiencia').val());
-  form_data.append('contrasena', $('#contrasena').val());
-  sendForm(form_data);
+  if($('#nit').val() != ''){
+    form_data.append('nombrePersona', $('#nombrePersona').val());
+    form_data.append('apellido', $('#apellido').val());
+    form_data.append('fechaNacimiento', $('#fechaNacimiento').val());
+    form_data.append('email', $('#email').val());
+
+    form_data.append('nit', $('#nit').val());
+    form_data.append('nombreEmp', $('#nombreEmp').val());
+    form_data.append('descripcion', $('#descripcion').val());
+
+    form_data.append('username', $('#username').val());
+    form_data.append('contrasena', $('#contrasena').val());
+    sendForm(form_data);
+  }else{
+    form_data.append('nombrePersona', $('#nombrePersona').val());
+    form_data.append('apellido', $('#apellido').val());
+    form_data.append('fechaNacimiento', $('#fechaNacimiento').val());
+    form_data.append('email', $('#email').val());
+
+    form_data.append('nit', $('#nit').val())
+
+    form_data.append('username', $('#username').val());
+    form_data.append('contrasena', $('#contrasena').val());
+    sendForm(form_data);
+  }
 }
 
 function sendForm(formData){
   $.ajax({
-    url: 'server/create_user.php',
+    url: '../Proyecto Seminario/server/create_user.php',
     dataType: "json",
     cache: false,
     processData: false,
@@ -50,7 +116,7 @@ function sendForm(formData){
     type: 'POST',
     success: function(php_response){
       if (php_response.msg == "exito en la inserción") {
-        window.location.href = 'welcome.html';
+        window.location.href = 'login.html';
       }else {
         alert(php_response.msg);
       }

@@ -2,12 +2,12 @@
 
 require('./conector.php');
 
-  $con = new ConectorBD('localhost','root','');
+  $con = new ConectorBD('localhost','santiago','kgUe2EFh#+gG');
 
-  $response['conexion'] =$con->initConexion('agenda');
+  $response['conexion'] =$con->initConexion('enterwork');
 
   if ($response['conexion']=='OK') {
-      $resultado_consulta = $con->consultar(['usuarios'],
+      $resultado_consulta = $con->consultar(['usuario'],
       ['email', 'password'], 'WHERE email="'.$_POST['username'].'"');
 
       if ($resultado_consulta->num_rows != 0) {

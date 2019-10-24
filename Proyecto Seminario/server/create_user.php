@@ -2,37 +2,56 @@
 
   include('conector.php');
 
-  $data['nombre'] = "'".$_POST['nombre']."'";
-  $data['fecha_nacimiento'] = "'".$_POST['fechaNacimiento']."'";
-  $data['sexo'] = "'".$_POST['sexo']."'";
-  $data['email'] = "'".$_POST['email']."'";
-  $data['experiencia'] = "'".$_POST['experiencia']."'";
-  $data['psw'] = "'".password_hash($_POST['contrasena'], PASSWORD_DEFAULT)."'";
+  if($_POST['nit'] == ''){
+    $dataPersona['nombre'] = "'".$_POST['nombrePersona']."'";
+    $dataPersona['apellido'] = "'".$_POST['apellido']."'";
+    $dataPersona['email'] = "'".$_POST['email']."'";
+    $dataPersona['fechaNacimiento'] = "'".$_POST['fechaNacimiento']."'";
 
-  if ($_POST['automovil'] == true && $_POST['bus'] == true) {
-    $data['tipo_vehiculo']= "'".'automovil y bus'."'";
-  }
-  if ($_POST['automovil'] == true && $_POST['bus'] == false) {
-    $data['tipo_vehiculo']= "'".'automovil'."'";
-  }
-  if ($_POST['automovil'] == false && $_POST['bus'] == true) {
-    $data['tipo_vehiculo']= "'".'bus'."'";
-  }
-  if ($_POST['fueraCiudad']== true) {
-    $data['fuera_ciudad']=1;
+    $dataUser['username'] = "'".$_POST['username']."'";
+    $dataUser['password'] = "'".$_POST['nombre']."'";
   }else {
-    $data['fuera_ciudad']=0;
+    $dataPersona['nombre'] = "'".$_POST['nombrePersona']."'";
+    $dataPersona['apellido'] = "'".$_POST['apellido']."'";
+    $dataPersona['email'] = "'".$_POST['email']."'";
+    $dataPersona['fechaNacimiento'] = "'".$_POST['fechaNacimiento']."'";
+
+    $dataEmpresa['NIT'] = "'".$_POST['nit']."'";
+    $dataEmpresa['nombre'] = "'".$_POST['nombreEmp']."'";
+    $dataEmpresa['descripcion'] = "'".$_POST['descripcion']."'";
+
+    $dataUser['username'] = "'".$_POST['username']."'";
+    $dataUser['password'] = "'".$_POST['nombre']."'";
   }
 
-
-  $con = new ConectorBD('localhost','t_create_user','1234567890');
-  $response['conexion'] = $con->initConexion('transporte_db');
+  $con = new ConectorBD('localhost','santiago','kgUe2EFh#+gG');
+  $response['conexion'] = $con->initConexion('enterwork');
 
   if ($response['conexion']=='OK') {
-    if($con->insertData('usuarios', $data)){
-      $response['msg']="exito en la inserción";
+    if($con->insertData('persona', $dataPersona)){
+      $consulta_person = $con->consultar(['persona'], ['id'], "WHERE email ='" .$dataPersona['nombre']."'");
+      $filaPerson = $consulta_user->fetch_assoc();
+
+      $dataUser['fk_persona'] = $filaPerson['id'];
+      if($_POST['nit'] == ''){
+        if($con->insertData('usuario', $dataUser){
+          $response['msg']="exito en la inserción";
+        }else {
+          $response['msg']= "Hubo un error y los datos de usuario no han sido cargados";
+        }
+      }else{
+        if($con->insertData('empresa', $dataEmpresa){
+          if($con->insertData('usuario', $dataUser){
+            $response['msg']="exito en la inserción";
+          }else {
+            $response['msg']= "Hubo un error y los datos de usuario no han sido cargados";
+          }
+        }else {
+          $response['msg']= "Hubo un error y los datos de empresa no han sido cargados";
+        }
+      }
     }else {
-      $response['msg']= "Hubo un error y los datos no han sido cargados";
+      $response['msg']= "Hubo un error y los datos de persona no han sido cargados";
     }
   }else {
     $response['msg']= "No se pudo conectar a la base de datos";
