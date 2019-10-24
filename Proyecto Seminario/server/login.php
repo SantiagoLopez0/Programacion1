@@ -2,17 +2,17 @@
 
 require('./conector.php');
 
-  $con = new ConectorBD('107.180.46.154','santiago','1234wer');
+  $con = new ConectorBD('localhost','santiago','1234wer');
 
   $response['conexion'] =$con->initConexion('enterwork');
 
   if ($response['conexion']=='OK') {
       $resultado_consulta = $con->consultar(['usuario'],
-      ['email', 'password'], 'WHERE email="'.$_POST['username'].'"');
+      ['username', 'password'], 'WHERE username="'.$_POST['username'].'"');
 
       if ($resultado_consulta->num_rows != 0) {
         $fila = $resultado_consulta->fetch_assoc();
-        if (password_verify($_POST['password'], $fila['password'])) {
+        if ($_POST['password'] = $fila['password']) {
           $response['msg'] = 'OK';
           session_start();
           $_SESSION['username']=$fila['email'];
@@ -21,7 +21,7 @@ require('./conector.php');
           $response['msg'] = 'rechazado';
         }
       }else{
-        $response['motivo'] = 'Email incorrecto';
+        $response['motivo'] = 'User incorrecto';
         $response['msg'] = 'rechazado';
       }
 
