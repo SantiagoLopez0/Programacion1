@@ -39,10 +39,6 @@ body{
   flex-direction: column;
 }
 
-.options a{
-  background-color: #4acaa8;
-}
-
 .segundaPersona, .terceraEmpresa, .cuartaUser{
   text-align: center;
 }

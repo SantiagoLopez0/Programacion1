@@ -20,7 +20,7 @@ class Login {
     form_data.append('username', $('#user').val())
     form_data.append('password', $('#password').val())
     $.ajax({
-      url: '../Proyecto Seminario/server/login.php',
+      url: 'server/login.php',
       dataType: "json",
       cache: false,
       processData: false,

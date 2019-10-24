@@ -32,21 +32,6 @@ function btnActions(){
     $('.cuartaUser').show();
   })
 
-  $('#btnYes').click(function(event){
-    event.preventDefault();
-    $('#formularioEmpresa').show();
-    $('.presentationRow').hide()
-    $('.options').hide()
-  })
-
-  $('#btnNo').click(function(event){
-    event.preventDefault();
-    $('.terceraEmpresa').hide();
-    $('#step2').removeClass('active');
-    $('#step3').addClass('active');
-    $('.cuartaUser').show();
-  });
-
   $('.volverEmp').click(function(event){
     event.preventDefault();
     $('.terceraEmpresa').hide();
@@ -78,7 +63,7 @@ function checkContrasena(){
 
 function getDatos(){
   var form_data = new FormData();
-  if($('#nit').val() != ''){
+
     form_data.append('nombrePersona', $('#nombrePersona').val());
     form_data.append('apellido', $('#apellido').val());
     form_data.append('fechaNacimiento', $('#fechaNacimiento').val());
@@ -91,23 +76,11 @@ function getDatos(){
     form_data.append('username', $('#username').val());
     form_data.append('contrasena', $('#contrasena').val());
     sendForm(form_data);
-  }else{
-    form_data.append('nombrePersona', $('#nombrePersona').val());
-    form_data.append('apellido', $('#apellido').val());
-    form_data.append('fechaNacimiento', $('#fechaNacimiento').val());
-    form_data.append('email', $('#email').val());
-
-    form_data.append('nit', $('#nit').val())
-
-    form_data.append('username', $('#username').val());
-    form_data.append('contrasena', $('#contrasena').val());
-    sendForm(form_data);
-  }
 }
 
 function sendForm(formData){
   $.ajax({
-    url: '../Proyecto Seminario/server/create_user.php',
+    url: 'server/create_user.php',
     dataType: "json",
     cache: false,
     processData: false,
@@ -121,8 +94,8 @@ function sendForm(formData){
         alert(php_response.msg);
       }
     },
-    error: function(){
-      alert("error en la comunicación con el servidor");
+    error: function(err){
+      console.log(err);
     }
   })
 }

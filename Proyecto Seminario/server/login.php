@@ -2,7 +2,7 @@
 
 require('./conector.php');
 
-  $con = new ConectorBD('localhost','santiago','kgUe2EFh#+gG');
+  $con = new ConectorBD('107.180.46.154','santiago','1234wer');
 
   $response['conexion'] =$con->initConexion('enterwork');
 
