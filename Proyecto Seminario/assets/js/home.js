@@ -12,8 +12,14 @@ function obtenerDataInicial() {
       contentType: false,
       type: 'GET',
       success: (data) => {
-        alert(data.msg);
-}
+        if(data.msg == 'OK'){
+          alert('Session ok');
+          $('.options').hide();
+        }else if(data.msg == 'No hay sesión abierta.'){
+          alert('Sesión no iniciada');
+        }else {
+          console.log(data.msg);
+        }
+      }
     })
-
 }

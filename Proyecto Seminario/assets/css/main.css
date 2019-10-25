@@ -2930,12 +2930,14 @@ input, select, textarea {
 .options{
 	display: block;
 	position: absolute;
-	top: 0;
-	margin-left: 80%;
+	top: 10px;
+	margin-left: 75%;
 }
 
 .options a{
 	margin-left: 10px;
+	background-color: #4acaa8;
+	color: #ffffff;
 }
 
 .container-1{
