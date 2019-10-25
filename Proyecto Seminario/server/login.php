@@ -15,7 +15,7 @@ require('./conector.php');
         if ($_POST['password'] = $fila['password']) {
           $response['msg'] = 'OK';
           session_start();
-          $_SESSION['username']=$fila['email'];
+          $_SESSION['username'] = $fila['username'];
         }else {
           $response['motivo'] = 'Contraseña incorrecta';
           $response['msg'] = 'rechazado';
